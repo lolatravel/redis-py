@@ -1,4 +1,4 @@
-from redis.connection import PythonParser, HiredisParser
+from redis35.connection import PythonParser, HiredisParser
 from base import Benchmark
 
 

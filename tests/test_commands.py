@@ -3,13 +3,13 @@ import binascii
 import datetime
 import pytest
 import re
-import redis
+import redis35
 import time
 
-from redis._compat import (unichr, ascii_letters, iteritems, iterkeys,
+from redis35._compat import (unichr, ascii_letters, iteritems, iterkeys,
                            itervalues, long, basestring)
-from redis.client import parse_info
-from redis import exceptions
+from redis35.client import parse_info
+from redis35 import exceptions
 
 from .conftest import (skip_if_server_version_lt, skip_if_server_version_gte,
                        skip_unless_arch_bits, REDIS_6_VERSION)
@@ -48,8 +48,8 @@ class TestResponseCallbacks(object):
     "Tests for the response callback system"
 
     def test_response_callbacks(self, r):
-        assert r.response_callbacks == redis.Redis.RESPONSE_CALLBACKS
-        assert id(r.response_callbacks) != id(redis.Redis.RESPONSE_CALLBACKS)
+        assert r.response_callbacks == redis35.Redis.RESPONSE_CALLBACKS
+        assert id(r.response_callbacks) != id(redis35.Redis.RESPONSE_CALLBACKS)
         r.set_response_callback('GET', lambda x: 'static')
         r['a'] = 'foo'
         assert r['a'] == 'static'
@@ -61,7 +61,7 @@ class TestResponseCallbacks(object):
 class TestRedisCommands(object):
     def test_command_on_invalid_key_type(self, r):
         r.lpush('a', '1')
-        with pytest.raises(redis.ResponseError):
+        with pytest.raises(redis35.ResponseError):
             r['a']
 
     # SERVER INFORMATION

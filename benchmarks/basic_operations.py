@@ -1,5 +1,5 @@
 from __future__ import print_function
-import redis
+import redis35
 import time
 import sys
 from functools import wraps
@@ -31,7 +31,7 @@ def parse_args():
 
 def run():
     args = parse_args()
-    r = redis.Redis()
+    r = redis35.Redis()
     r.flushall()
     set_str(conn=r, num=args.n, pipeline_size=args.P, data_size=args.s)
     set_int(conn=r, num=args.n, pipeline_size=args.P, data_size=args.s)

@@ -9,12 +9,12 @@ import socket
 import threading
 import warnings
 
-from redis._compat import (xrange, imap, unicode, long,
+from redis35._compat import (xrange, imap, unicode, long,
                            nativestr, basestring, iteritems,
                            LifoQueue, Empty, Full, urlparse, parse_qs,
                            recv, recv_into, unquote, BlockingIOError,
                            sendall, shutdown, ssl_wrap_socket)
-from redis.exceptions import (
+from redis35.exceptions import (
     AuthenticationError,
     AuthenticationWrongNumberOfArgsError,
     BusyLoadingError,
@@ -30,7 +30,7 @@ from redis.exceptions import (
     ResponseError,
     TimeoutError,
 )
-from redis.utils import HIREDIS_AVAILABLE
+from redis35.utils import HIREDIS_AVAILABLE
 
 try:
     import ssl
@@ -1274,7 +1274,7 @@ class BlockingConnectionPool(ConnectionPool):
     """
     Thread-safe blocking connection pool::
 
-        >>> from redis.client import Redis
+        >>> from redis35.client import Redis
         >>> client = Redis(connection_pool=BlockingConnectionPool())
 
     It performs the same function as the default

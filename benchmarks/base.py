@@ -1,9 +1,9 @@
 import functools
 import itertools
-import redis
+import redis35
 import sys
 import timeit
-from redis._compat import izip
+from redis35._compat import izip
 
 
 class Benchmark(object):
@@ -20,8 +20,8 @@ class Benchmark(object):
                 'db': 9
             }
             defaults.update(kwargs)
-            pool = redis.ConnectionPool(**kwargs)
-            self._client = redis.Redis(connection_pool=pool)
+            pool = redis35.ConnectionPool(**kwargs)
+            self._client = redis35.Redis(connection_pool=pool)
         return self._client
 
     def setup(self, **kwargs):

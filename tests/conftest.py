@@ -1,7 +1,7 @@
 import random
 
 import pytest
-import redis
+import redis35
 from mock import Mock
 
 from distutils.version import StrictVersion
@@ -25,7 +25,7 @@ def pytest_addoption(parser):
 
 
 def _get_info(redis_url):
-    client = redis.Redis.from_url(redis_url)
+    client = redis35.Redis.from_url(redis_url)
     info = client.info()
     client.connection_pool.disconnect()
     return info
@@ -70,7 +70,7 @@ def _get_client(cls, request, single_connection_client=True, **kwargs):
         def teardown():
             try:
                 client.flushdb()
-            except redis.ConnectionError:
+            except redis35.ConnectionError:
                 # handle cases where a test disconnected a client
                 # just manually retry the flushdb
                 client.flushdb()
@@ -82,14 +82,14 @@ def _get_client(cls, request, single_connection_client=True, **kwargs):
 
 @pytest.fixture()
 def r(request):
-    with _get_client(redis.Redis, request) as client:
+    with _get_client(redis35.Redis, request) as client:
         yield client
 
 
 @pytest.fixture()
 def r2(request):
     "A second client for tests that need multiple"
-    with _get_client(redis.Redis, request) as client:
+    with _get_client(redis35.Redis, request) as client:
         yield client
 
 
@@ -102,19 +102,19 @@ def _gen_cluster_mock_resp(r, response):
 
 @pytest.fixture()
 def mock_cluster_resp_ok(request, **kwargs):
-    r = _get_client(redis.Redis, request, **kwargs)
+    r = _get_client(redis35.Redis, request, **kwargs)
     return _gen_cluster_mock_resp(r, 'OK')
 
 
 @pytest.fixture()
 def mock_cluster_resp_int(request, **kwargs):
-    r = _get_client(redis.Redis, request, **kwargs)
+    r = _get_client(redis35.Redis, request, **kwargs)
     return _gen_cluster_mock_resp(r, '2')
 
 
 @pytest.fixture()
 def mock_cluster_resp_info(request, **kwargs):
-    r = _get_client(redis.Redis, request, **kwargs)
+    r = _get_client(redis35.Redis, request, **kwargs)
     response = ('cluster_state:ok\r\ncluster_slots_assigned:16384\r\n'
                 'cluster_slots_ok:16384\r\ncluster_slots_pfail:0\r\n'
                 'cluster_slots_fail:0\r\ncluster_known_nodes:7\r\n'
@@ -126,7 +126,7 @@ def mock_cluster_resp_info(request, **kwargs):
 
 @pytest.fixture()
 def mock_cluster_resp_nodes(request, **kwargs):
-    r = _get_client(redis.Redis, request, **kwargs)
+    r = _get_client(redis35.Redis, request, **kwargs)
     response = ('c8253bae761cb1ecb2b61857d85dfe455a0fec8b 172.17.0.7:7006 '
                 'slave aa90da731f673a99617dfe930306549a09f83a6b 0 '
                 '1447836263059 5 connected\n'
@@ -149,7 +149,7 @@ def mock_cluster_resp_nodes(request, **kwargs):
 
 @pytest.fixture()
 def mock_cluster_resp_slaves(request, **kwargs):
-    r = _get_client(redis.Redis, request, **kwargs)
+    r = _get_client(redis35.Redis, request, **kwargs)
     response = ("['1df047e5a594f945d82fc140be97a1452bcbf93e 172.17.0.7:7007 "
                 "slave 19efe5a631f3296fdf21a5441680f893e8cc96ec 0 "
                 "1447836789290 3 connected']")

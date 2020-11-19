@@ -1,7 +1,7 @@
 import socket
-from redis.connection import (Connection, SYM_STAR, SYM_DOLLAR, SYM_EMPTY,
+from redis35.connection import (Connection, SYM_STAR, SYM_DOLLAR, SYM_EMPTY,
                               SYM_CRLF)
-from redis._compat import imap
+from redis35._compat import imap
 from base import Benchmark
 
 

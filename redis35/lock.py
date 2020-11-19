@@ -1,8 +1,8 @@
 import threading
 import time as mod_time
 import uuid
-from redis.exceptions import LockError, LockNotOwnedError
-from redis.utils import dummy
+from redis35.exceptions import LockError, LockNotOwnedError
+from redis35.utils import dummy
 
 
 class Lock(object):
