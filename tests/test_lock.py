@@ -1,9 +1,9 @@
 import pytest
 import time
 
-from redis.exceptions import LockError, LockNotOwnedError
-from redis.client import Redis
-from redis.lock import Lock
+from redis35.exceptions import LockError, LockNotOwnedError
+from redis35.client import Redis
+from redis35.lock import Lock
 from .conftest import _get_client
 
 

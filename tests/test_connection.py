@@ -1,8 +1,8 @@
 import mock
 import pytest
 
-from redis.exceptions import InvalidResponse
-from redis.utils import HIREDIS_AVAILABLE
+from redis35.exceptions import InvalidResponse
+from redis35.utils import HIREDIS_AVAILABLE
 
 
 @pytest.mark.skipif(HIREDIS_AVAILABLE, reason='PythonParser only')

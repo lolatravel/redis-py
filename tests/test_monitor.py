@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-from redis._compat import unicode
+from redis35._compat import unicode
 from .conftest import wait_for_command
 
 

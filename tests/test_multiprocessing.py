@@ -2,9 +2,9 @@ import pytest
 import multiprocessing
 import contextlib
 
-import redis
-from redis.connection import Connection, ConnectionPool
-from redis.exceptions import ConnectionError
+import redis35
+from redis35.connection import Connection, ConnectionPool
+from redis35.exceptions import ConnectionError
 
 from .conftest import _get_client
 
@@ -26,7 +26,7 @@ class TestMultiprocessing(object):
     @pytest.fixture()
     def r(self, request):
         return _get_client(
-            redis.Redis,
+            redis35.Redis,
             request=request,
             single_connection_client=False)
 

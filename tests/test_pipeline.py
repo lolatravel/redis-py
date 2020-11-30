@@ -1,8 +1,8 @@
 from __future__ import unicode_literals
 import pytest
 
-import redis
-from redis._compat import unichr, unicode
+import redis35
+from redis35._compat import unichr, unicode
 from .conftest import wait_for_command
 
 
@@ -84,7 +84,7 @@ class TestPipeline(object):
             pipe.multi()
             pipe.set('a', int(a) + 1)
 
-            with pytest.raises(redis.WatchError):
+            with pytest.raises(redis35.WatchError):
                 pipe.execute()
 
             assert r['a'] == b'bad'
@@ -106,7 +106,7 @@ class TestPipeline(object):
 
             # we can't lpush to a key that's a string value, so this should
             # be a ResponseError exception
-            assert isinstance(result[2], redis.ResponseError)
+            assert isinstance(result[2], redis35.ResponseError)
             assert r['c'] == b'a'
 
             # since this isn't a transaction, the other commands after the
@@ -122,7 +122,7 @@ class TestPipeline(object):
         r['c'] = 'a'
         with r.pipeline() as pipe:
             pipe.set('a', 1).set('b', 2).lpush('c', 3).set('d', 4)
-            with pytest.raises(redis.ResponseError) as ex:
+            with pytest.raises(redis35.ResponseError) as ex:
                 pipe.execute()
             assert unicode(ex.value).startswith('Command # 3 (LPUSH c 3) of '
                                                 'pipeline caused error: ')
@@ -163,7 +163,7 @@ class TestPipeline(object):
         with r.pipeline() as pipe:
             # the zrem is invalid because we don't pass any keys to it
             pipe.set('a', 1).zrem('b').set('b', 2)
-            with pytest.raises(redis.ResponseError) as ex:
+            with pytest.raises(redis35.ResponseError) as ex:
                 pipe.execute()
 
             assert unicode(ex.value).startswith('Command # 2 (ZREM b) of '
@@ -178,7 +178,7 @@ class TestPipeline(object):
             pipe.multi()
             # the zrem is invalid because we don't pass any keys to it
             pipe.set('a', 1).zrem('b').set('b', 2)
-            with pytest.raises(redis.ResponseError) as ex:
+            with pytest.raises(redis35.ResponseError) as ex:
                 pipe.execute()
 
             assert unicode(ex.value).startswith('Command # 2 (ZREM b) of '
@@ -214,7 +214,7 @@ class TestPipeline(object):
             r['b'] = 3
             pipe.multi()
             pipe.get('a')
-            with pytest.raises(redis.WatchError):
+            with pytest.raises(redis35.WatchError):
                 pipe.execute()
 
             assert not pipe.watching
@@ -227,7 +227,7 @@ class TestPipeline(object):
             pipe.watch('a', 'b')
             r['b'] = 3
             pipe.multi()
-            with pytest.raises(redis.WatchError):
+            with pytest.raises(redis35.WatchError):
                 pipe.execute()
 
             assert not pipe.watching
@@ -316,7 +316,7 @@ class TestPipeline(object):
             pipe.llen('a')
             pipe.expire('a', 100)
 
-            with pytest.raises(redis.ResponseError) as ex:
+            with pytest.raises(redis35.ResponseError) as ex:
                 pipe.execute()
 
             assert unicode(ex.value).startswith('Command # 1 (LLEN a) of '
@@ -331,7 +331,7 @@ class TestPipeline(object):
             pipe.llen(key)
             pipe.expire(key, 100)
 
-            with pytest.raises(redis.ResponseError) as ex:
+            with pytest.raises(redis35.ResponseError) as ex:
                 pipe.execute()
 
             expected = unicode('Command # 1 (LLEN %s) of pipeline caused '

@@ -1,10 +1,10 @@
 import pytest
 
-from redis import exceptions
-from redis.sentinel import (Sentinel, SentinelConnectionPool,
+from redis35 import exceptions
+from redis35.sentinel import (Sentinel, SentinelConnectionPool,
                             MasterNotFoundError, SlaveNotFoundError)
-from redis._compat import next
-import redis.sentinel
+from redis35._compat import next
+import redis35.sentinel
 
 
 class SentinelTestClient(object):
@@ -56,10 +56,10 @@ class SentinelTestCluster(object):
 @pytest.fixture()
 def cluster(request):
     def teardown():
-        redis.sentinel.Redis = saved_Redis
+        redis35.sentinel.Redis = saved_Redis
     cluster = SentinelTestCluster()
-    saved_Redis = redis.sentinel.Redis
-    redis.sentinel.Redis = cluster.client
+    saved_Redis = redis35.sentinel.Redis
+    redis35.sentinel.Redis = cluster.client
     request.addfinalizer(teardown)
     return cluster
 

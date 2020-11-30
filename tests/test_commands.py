@@ -600,7 +600,7 @@ class TestRedisCommands(object):
     def test_dump_and_restore_and_replace(self, r):
         r['a'] = 'bar'
         dumped = r.dump('a')
-        with pytest.raises(redis.ResponseError):
+        with pytest.raises(redis35.ResponseError):
             r.restore('a', 0, dumped)
 
         r.restore('a', 0, dumped, replace=True)
